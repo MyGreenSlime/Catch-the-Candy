@@ -17,7 +17,7 @@ public class BirdSprite {
     private static final int Garvity = 3;
     private float Time = 0;
     private int Flip = 0;
-    private int Speedx = 1;
+    private int Speedx = 2;
     private int Status =0;
     private Vector2 position;
     public BirdSprite(int x,int y){

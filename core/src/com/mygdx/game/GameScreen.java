@@ -18,49 +18,30 @@ import static java.lang.StrictMath.abs;
  */
 public class GameScreen extends ScreenAdapter {
     private MyGame myGame;
-    private Texture spriteImg;
-    private Texture wallheadImg;
-    private Texture wallbottomImg;
-    private BirdSprite birdSprite;
-    private Vector2 pos;
+    private WorldRenderer worldRenderer;
+
+
+    World world;
     public GameScreen(MyGame myGame){
         this.myGame = myGame;
-        spriteImg = new Texture("bird1.png");
-        wallheadImg = new Texture("spikewallhead.png");
-        wallbottomImg = new Texture("spikewallbottom.png");
-        birdSprite = new BirdSprite(20,350);
+        world = new World(myGame);
+        worldRenderer =new WorldRenderer(myGame,world);
+        //birdSprite = new BirdSprite(20,350);
 
     }
-    private void imgupdate(int status){
-        if(status == 0) {
-            spriteImg = new Texture("bird1.png");
-        }
-        else if(status == 1) {
-            spriteImg = new Texture("bird1flip.png");
-        }
-        else if(status == 2) {
-            spriteImg = new Texture("bird2.png");
-        }
-        else if(status == 3) {
-            spriteImg = new Texture("bird2flip.png");
-        }
-    }
+
     private void update(float delta){
-        birdSprite.move(delta);
-        imgupdate(birdSprite.getStatus());
+        world.getBirdSprite().move(delta);
+
         //System.out.println(birdSprite.getPosition().x);
 
     }
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        SpriteBatch batch = myGame.batch;
-        batch.begin();
         update(delta);
-        batch.draw(spriteImg, birdSprite.getPosition().x, birdSprite.getPosition().y);
-        batch.draw(wallbottomImg, 0, 0);
-        batch.draw(wallheadImg, 0, 640);
-        batch.end();
+        worldRenderer.render(delta);
+
     }
 }
 
