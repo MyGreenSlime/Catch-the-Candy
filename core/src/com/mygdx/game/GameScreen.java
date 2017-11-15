@@ -6,6 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import sun.font.TrueTypeFont;
 
 import static java.lang.Boolean.FALSE;
@@ -18,66 +19,41 @@ import static java.lang.StrictMath.abs;
 public class GameScreen extends ScreenAdapter {
     private MyGame myGame;
     private Texture spriteImg;
-    private int x;
-    private int y;
-    private boolean check = FALSE;
-    private int speedy = 0;
-    private int Garvity;
-    private float time = 0;
-    private int Flip = 0;
-    private int speedx = 1;
+    private BirdSprite birdSprite;
+    private Vector2 pos;
     public GameScreen(MyGame myGame){
         this.myGame = myGame;
         spriteImg = new Texture("bird1.png");
-        x =20;
-        y =300;
-        Garvity = 2;
-    }
-    private void update(float delta){
-        time+=delta;
-        x+=speedx;
-        y+=speedy;
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)&&check == FALSE) {
-            if(Flip==0)
-                spriteImg = new Texture("bird2.png");
-            else
-                spriteImg = new Texture("bird2flip.png");
-            speedy = 3;
-            y+=30;
-            check = TRUE;
+        birdSprite = new BirdSprite(20,350);
 
-        }
-        if(time>0.2){
-            speedy-=Garvity;
-            if(check){
-                if(Flip==0)
-                    spriteImg = new Texture("bird1.png");
-                else
-                    spriteImg = new Texture("bird1flip.png");
-                check =FALSE;
-            }
-            time = 0;
-        }
-        if(340-x<0){
-            speedx*=-1;
-            Flip = 1;
-            spriteImg = new Texture("bird1flip.png");
-        }
-        if(x<0){
-            speedx*=-1;
-            Flip = 0;
+    }
+    private void imgupdate(int status){
+        if(status == 0) {
             spriteImg = new Texture("bird1.png");
         }
-
+        else if(status == 1) {
+            spriteImg = new Texture("bird1flip.png");
+        }
+        else if(status == 2) {
+            spriteImg = new Texture("bird2.png");
+        }
+        else if(status == 3) {
+            spriteImg = new Texture("bird2flip.png");
+        }
+    }
+    private void update(float delta){
+        birdSprite.move(delta);
+        imgupdate(birdSprite.getStatus());
+        //System.out.println(birdSprite.getPosition().x);
 
     }
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         SpriteBatch batch = myGame.batch;
-        update(delta);
         batch.begin();
-        batch.draw(spriteImg, x, y);
+        update(delta);
+        batch.draw(spriteImg, birdSprite.getPosition().x, birdSprite.getPosition().y);
         batch.end();
     }
 }
