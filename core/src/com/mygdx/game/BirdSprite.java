@@ -14,7 +14,7 @@ import static java.lang.Boolean.TRUE;
 public class BirdSprite {
     private boolean Check = FALSE;
     private int Speedy = 0;
-    private int Garvity;
+    private static final int Garvity = 3;
     private float Time = 0;
     private int Flip = 0;
     private int Speedx = 1;
@@ -22,7 +22,6 @@ public class BirdSprite {
     private Vector2 position;
     public BirdSprite(int x,int y){
         position = new Vector2(x,y);
-        Garvity = 3;
     }
     public Vector2 getPosition(){
         return position;
@@ -44,6 +43,7 @@ public class BirdSprite {
             Speedy = 3;
             position.y += 40;
             Check = TRUE;
+            Time = 0;
 
         }
         if (Time > 0.2) {

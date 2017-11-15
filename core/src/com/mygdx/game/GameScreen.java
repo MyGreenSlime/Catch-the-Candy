@@ -19,11 +19,15 @@ import static java.lang.StrictMath.abs;
 public class GameScreen extends ScreenAdapter {
     private MyGame myGame;
     private Texture spriteImg;
+    private Texture wallheadImg;
+    private Texture wallbottomImg;
     private BirdSprite birdSprite;
     private Vector2 pos;
     public GameScreen(MyGame myGame){
         this.myGame = myGame;
         spriteImg = new Texture("bird1.png");
+        wallheadImg = new Texture("spikewallhead.png");
+        wallbottomImg = new Texture("spikewallbottom.png");
         birdSprite = new BirdSprite(20,350);
 
     }
@@ -54,6 +58,8 @@ public class GameScreen extends ScreenAdapter {
         batch.begin();
         update(delta);
         batch.draw(spriteImg, birdSprite.getPosition().x, birdSprite.getPosition().y);
+        batch.draw(wallbottomImg, 0, 0);
+        batch.draw(wallheadImg, 0, 640);
         batch.end();
     }
 }
