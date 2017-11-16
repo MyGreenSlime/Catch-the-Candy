@@ -31,9 +31,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void update(float delta){
-        world.getBirdSprite().move(delta);
-
-        //System.out.println(birdSprite.getPosition().x);
+        world.update(delta);
 
     }
     public void render(float delta) {
