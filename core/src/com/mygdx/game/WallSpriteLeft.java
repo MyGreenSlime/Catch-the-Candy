@@ -10,7 +10,6 @@ public class WallSpriteLeft {
     private Vector2 position;
     private int move;
     public WallSpriteLeft(int x,int y){
-        wallStatus = 1;
         position = new Vector2(x,y);
         move = 1;
     }

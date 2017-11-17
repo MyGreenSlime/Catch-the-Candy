@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Math.abs;
+
 /**
  * Created by GreenSlime on 15/11/2560.
  */
@@ -27,9 +29,9 @@ public class World {
         rand = new Random();
         temp = new ArrayList<Integer>();
         tempReal = new ArrayList<Integer>();
-        for(int i = 0;i<10;i++){
-            tmpwallleft = new WallSpriteLeft(-60,60 +60*i);
-            tmpwallright = new WallSpriteRight(400,60+60*i);
+        for(int i = 0;i<8;i++){
+            tmpwallleft = new WallSpriteLeft(-60,40 +80*i);
+            tmpwallright = new WallSpriteRight(400,40+80*i);
             ArrWallRight.add(tmpwallright);
             ArrWallLeft.add(tmpwallleft);
             temp.add(i);
@@ -48,16 +50,14 @@ public class World {
     List<WallSpriteRight> getArrwallright(){
         return ArrWallRight;
     }
-
-    public void update(float delta){
-        birdSprite.move(delta);
+    private void wallmove(){
         if(tempscore != birdSprite.getScore()){
             temp.clear();
             tempReal.clear();
-            for (int i = 0;i<10;i++){
+            for (int i = 0;i<8;i++){
                 temp.add(i);
             }
-            for(int i = 0;i<1+birdSprite.getScore()/5;i++){
+            for(int i = 0;i<1+birdSprite.getScore()/7;i++){
                 int tmp = rand.nextInt(temp.size());
                 tempReal.add(temp.get(tmp));
                 temp.remove(tmp);
@@ -83,6 +83,27 @@ public class World {
             }
         }
         tempscore = birdSprite.getScore();
+    }
+    private void checkhit(){
+        if(birdSprite.getScore()%2==1) {
+            for (int i = 0; i < ArrWallLeft.size(); i++) {
+                if (abs(ArrWallLeft.get(i).getPosition().x+60-(birdSprite.getPosition().x+20)) <= 20 && abs(ArrWallLeft.get(i).getPosition().y +30 -birdSprite.getPosition().y-20) <= 20) {
+                    System.out.println("hit left" + i);
+                }
+            }
+        }
+        else if(birdSprite.getScore()%2==0) {
+            for (int i = 0; i < ArrWallRight.size(); i++) {
+                if (abs(ArrWallRight.get(i).getPosition().x-birdSprite.getPosition().x-40) <= 20 && abs(ArrWallRight.get(i).getPosition().y +30-birdSprite.getPosition().y-20) <= 20) {
+                    System.out.println("hit right" + i);
+                }
+            }
+        }
+    }
+    public void update(float delta){
+        birdSprite.move(delta);
+        wallmove();
+        checkhit();
 
     }
 }

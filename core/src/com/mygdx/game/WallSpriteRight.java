@@ -6,19 +6,16 @@ import com.badlogic.gdx.math.Vector2;
  * Created by GreenSlime on 17/11/2560.
  */
 public class WallSpriteRight {
-    private int wallStatus;
     private Vector2 position;
     private int move;
     public WallSpriteRight(int x,int y){
-        wallStatus = 1;
         position = new Vector2(x,y);
-        move = 1;
+        move = -1;
     }
 
     public void inScreen(){
         //position.x = -30;
         move = -1;
-        System.out.println("inright");
         if(position.x == 370){
             move = 0;
         }
