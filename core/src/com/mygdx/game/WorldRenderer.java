@@ -40,7 +40,7 @@ public class WorldRenderer {
         }
 
         arrspikeright = new ArrayList<Texture>();
-        for(int i = 0;i<7;i++){
+        for(int i = 0;i<world.getArrwallright().size();i++){
             spikerightImg = new Texture("spikeright.png");
             arrspikeright.add(spikerightImg);
         }
@@ -71,7 +71,7 @@ public class WorldRenderer {
             batch.draw(arrspikeleft.get(i),world.getArrwallleft().get(i).getPosition().x,world.getArrwallleft().get(i).getPosition().y);
         }
         for(int i =0;i<arrspikeright.size();i++){
-            batch.draw(arrspikeright.get(i),380,80+80*i);
+            batch.draw(arrspikeright.get(i),world.getArrwallright().get(i).getPosition().x,world.getArrwallright().get(i).getPosition().y);
         }
         batch.end();
     }
