@@ -52,10 +52,10 @@ public class BirdSprite {
             score++;
         }
 
-        if(position.y-40 <= 0){
+        /*if(position.y-40 <= 0){
             position.y += 80;
             Speedy = 3;
-        }
+        }*/
         //System.out.println(score);
     }
     public void move(float delta) {

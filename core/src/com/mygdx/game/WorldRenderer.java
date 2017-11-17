@@ -21,6 +21,8 @@ public class WorldRenderer {
     private Texture wallheadImg;
     private Texture wallbottomImg;
     private Texture circle;
+    private Texture gameOver;
+    private Texture scoreboard;
     private List<Texture> num1;
     private List<Texture> num2;
 
@@ -39,6 +41,8 @@ public class WorldRenderer {
         wallheadImg = new Texture("spikewallhead.png");
         wallbottomImg = new Texture("spikewallbottom.png");
         circle = new Texture("circle.png");
+        gameOver =new Texture("gameover.png");
+        scoreboard = new Texture("scoreboard.png");
         num1 = new ArrayList<Texture>();
         num2 = new ArrayList<Texture>();
         num1 = Arrays.asList(new Texture("0.png"),new Texture("1.png"),new Texture("2.png"),new Texture("3.png"),new Texture("4.png"),new Texture("5.png"),new Texture("6.png"),new Texture("7.png"),new Texture("8.png"),new Texture("9.png"));
@@ -82,12 +86,12 @@ public class WorldRenderer {
         }
         return 0;
     }
-    public void render(float delta){
+    private void renderplay(){
         SpriteBatch batch = myGame.batch;
         imgupdate(world.getBirdSprite().getStatus());
         batch.begin();
         batch.draw(circle, 50, 200);
-        batch.draw(num1.get(calscore('/')), 85, 275);
+        batch.draw(num1.get(calscore('/')), 80, 275);
         batch.draw(num1.get(calscore('%')),200,275);
 
         batch.draw(spriteImg, world.getBirdSprite().getPosition().x, world.getBirdSprite().getPosition().y);
@@ -100,5 +104,25 @@ public class WorldRenderer {
             batch.draw(arrspikeright.get(i),world.getArrwallright().get(i).getPosition().x,world.getArrwallright().get(i).getPosition().y);
         }
         batch.end();
+    }
+    private void rendergameover(){
+        SpriteBatch batch = myGame.batch;
+        batch.begin();
+        batch.draw(gameOver,50,200);
+        batch.draw(scoreboard, 100, 125);
+        batch.draw(num1.get(calscore('/')), 210, 125,50,60);
+        batch.draw(num1.get(calscore('%')),250,125,50,60);
+        batch.end();
+    }
+    public void render(float delta){
+
+        if(world.gameStatus == 1){
+            renderplay();
+        }
+        else if(world.gameStatus == 0)
+        {
+            rendergameover();
+        }
+
     }
 }
