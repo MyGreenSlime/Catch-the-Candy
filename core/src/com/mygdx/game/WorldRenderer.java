@@ -1,9 +1,12 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,6 +20,9 @@ public class WorldRenderer {
     private Texture spriteImg;
     private Texture wallheadImg;
     private Texture wallbottomImg;
+    private Texture circle;
+    private List<Texture> num1;
+    private List<Texture> num2;
 
     private Texture spikeleftImg;
     private List<Texture> arrspikeleft;
@@ -32,6 +38,11 @@ public class WorldRenderer {
         spriteImg = new Texture("bird1.png");
         wallheadImg = new Texture("spikewallhead.png");
         wallbottomImg = new Texture("spikewallbottom.png");
+        circle = new Texture("circle.png");
+        num1 = new ArrayList<Texture>();
+        num2 = new ArrayList<Texture>();
+        num1 = Arrays.asList(new Texture("0.png"),new Texture("1.png"),new Texture("2.png"),new Texture("3.png"),new Texture("4.png"),new Texture("5.png"),new Texture("6.png"),new Texture("7.png"),new Texture("8.png"),new Texture("9.png"));
+        num2 = Arrays.asList(new Texture("0.png"),new Texture("1.png"),new Texture("2.png"),new Texture("3.png"),new Texture("4.png"),new Texture("5.png"),new Texture("6.png"),new Texture("7.png"),new Texture("8.png"),new Texture("9.png"));
 
         arrspikeleft = new ArrayList<Texture>();
         for(int i = 0;i<world.getArrwallleft().size();i++){
@@ -60,10 +71,25 @@ public class WorldRenderer {
             spriteImg = new Texture("bird2flip.png");
         }
     }
+    private int calscore(char i){
+        if(i == '/'){
+            int x = world.getBirdSprite().getScore()/10;
+            return x;
+        }
+        else if(i == '%'){
+            int x = world.getBirdSprite().getScore()%10;
+            return x;
+        }
+        return 0;
+    }
     public void render(float delta){
         SpriteBatch batch = myGame.batch;
         imgupdate(world.getBirdSprite().getStatus());
         batch.begin();
+        batch.draw(circle, 50, 200);
+        batch.draw(num1.get(calscore('/')), 85, 275);
+        batch.draw(num1.get(calscore('%')),200,275);
+
         batch.draw(spriteImg, world.getBirdSprite().getPosition().x, world.getBirdSprite().getPosition().y);
         batch.draw(wallbottomImg, 0, -30);
         batch.draw(wallheadImg, 0, 670);
