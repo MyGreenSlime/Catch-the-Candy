@@ -16,6 +16,7 @@ import static java.lang.Math.abs;
  */
 public class World {
     private BirdSprite birdSprite;
+    private Candy candy;
     private MyGame myGame;
 
     private WallSpriteLeft tmpwallleft;
@@ -24,15 +25,19 @@ public class World {
     private List<WallSpriteRight> ArrWallRight;
 
     private Random rand;
-    private int tempscore;
+    private int tempflip;
     private List<Integer> temp;
     private List<Integer> tempReal;
 
+    public int score;
+
     public int gameStatus;
     World(MyGame myGame){
-        gameStatus = 1;
+        gameStatus = -1;
         this.myGame = myGame;
         birdSprite = new BirdSprite(200,350);
+        candy = new Candy();
+        score = 0;
 
         ArrWallLeft = new ArrayList<WallSpriteLeft>();
         ArrWallRight = new ArrayList<WallSpriteRight>();
@@ -48,7 +53,7 @@ public class World {
             ArrWallLeft.add(tmpwallleft);
             temp.add(i);
         }
-        tempscore = birdSprite.getScore();
+        tempflip = birdSprite.getFlip();
 
 
     }
@@ -56,6 +61,8 @@ public class World {
         gameStatus = 1;
         this.myGame = myGame;
         birdSprite = new BirdSprite(200,350);
+        candy = new Candy();
+        score = 0;
 
         ArrWallLeft = new ArrayList<WallSpriteLeft>();
         ArrWallRight = new ArrayList<WallSpriteRight>();
@@ -71,7 +78,7 @@ public class World {
             ArrWallLeft.add(tmpwallleft);
             temp.add(i);
         }
-        tempscore = birdSprite.getScore();
+        tempflip = birdSprite.getFlip();
     }
     BirdSprite getBirdSprite()
     {
@@ -83,14 +90,17 @@ public class World {
     List<WallSpriteRight> getArrwallright(){
         return ArrWallRight;
     }
+    Candy getCandy(){
+        return candy;
+    }
     private void wallmove(){
-        if(tempscore != birdSprite.getScore()){
+        if(tempflip != birdSprite.getFlip()){
             temp.clear();
             tempReal.clear();
             for (int i = 0;i<8;i++){
                 temp.add(i);
             }
-            int numofspike = 1+birdSprite.getScore()/7;
+            int numofspike = 1+score/5;
             if(numofspike>6){
                 numofspike = 6;
             }
@@ -103,36 +113,36 @@ public class World {
         }
         else{
             for(int i =0;i<tempReal.size();i++){
-                if(birdSprite.getScore()%2==1)
+                if(birdSprite.getFlip()%2==1)
                     ArrWallLeft.get(tempReal.get(i)).inScreen();
-                else if(birdSprite.getScore()%2==0){
+                else if(birdSprite.getFlip()%2==0){
                     ArrWallRight.get(tempReal.get(i)).inScreen();
                 }
                 //System.out.println("wall"+tempReal.get(i));
             }
         }
         for(int i = 0;i<ArrWallLeft.size();i++){
-            if(birdSprite.getScore()%2==0){
+            if(birdSprite.getFlip()%2==0){
                 ArrWallLeft.get(i).outScreen();
             }
-            else if(birdSprite.getScore()%2==1){
+            else if(birdSprite.getFlip()%2==1){
                 ArrWallRight.get(i).outScreen();
             }
         }
-        tempscore = birdSprite.getScore();
+        tempflip = birdSprite.getFlip();
     }
     private void checkhit(){
-        if(birdSprite.getScore()%2==1) {
+        if(score%2==1) {
             for (int i = 0; i < ArrWallLeft.size(); i++) {
-                if (abs(ArrWallLeft.get(i).getPosition().x+60-(birdSprite.getPosition().x+20)) <= 15 && abs(ArrWallLeft.get(i).getPosition().y +30 -birdSprite.getPosition().y-20) <= 20) {
+                if (abs(ArrWallLeft.get(i).getPosition().x+60-(birdSprite.getPosition().x+20)) <= 17 && abs(ArrWallLeft.get(i).getPosition().y +30 -birdSprite.getPosition().y-20) <= 20) {
                     gameStatus = 0;
                     //System.out.println("hit left" + i);
                 }
             }
         }
-        else if(birdSprite.getScore()%2==0) {
+        else if(score%2==0) {
             for (int i = 0; i < ArrWallRight.size(); i++) {
-                if (abs(ArrWallRight.get(i).getPosition().x-birdSprite.getPosition().x-20) <= 15 && abs(ArrWallRight.get(i).getPosition().y +30-birdSprite.getPosition().y-20) <= 20) {
+                if (abs(ArrWallRight.get(i).getPosition().x-birdSprite.getPosition().x-20) <= 17 && abs(ArrWallRight.get(i).getPosition().y +30-birdSprite.getPosition().y-20) <= 20) {
                     gameStatus = 0;
                     //System.out.println("hit right" + i);
                 }
@@ -141,12 +151,24 @@ public class World {
         if(birdSprite.getPosition().y-40<0 || birdSprite.getPosition().y>630){
             gameStatus =0;
         }
+
+        if(abs(candy.getPosition().x-birdSprite.getPosition().x)<=20 && abs(candy.getPosition().y-birdSprite.getPosition().y)<=20){
+            candy.setRand();
+            score +=1;
+        }
     }
     public void update(float delta){
         if(gameStatus == 1) {
             birdSprite.move(delta);
             wallmove();
             checkhit();
+        }
+        else if(gameStatus == -1){
+
+            if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                gameStatus = 1;
+            }
+
         }
         else if(gameStatus == 0){
 

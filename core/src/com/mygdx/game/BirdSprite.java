@@ -22,7 +22,6 @@ public class BirdSprite {
     private int Speedx = 3;
     private int Status =0;
     private Vector2 position;
-    private int score = 0;
     public BirdSprite(int x,int y){
         position = new Vector2(x,y);
 
@@ -33,23 +32,24 @@ public class BirdSprite {
     public int getStatus(){
         return Status;
     }
-    public int getScore(){
-        return score;
+    public int getFlip(){
+        return Flip;
     }
+
     private void checkwall(){
-        if (340 - position.x < 0) {
+        if (360 - position.x < 0) {
             Speedx *= -1;
             Flip = 1;
             //spriteImg = new Texture("bird1flip.png");
             Status = 1;
-            score++;
+            //score++;
         }
         else if (position.x < 0) {
             Speedx *= -1;
             Flip = 0;
             //spriteImg = new Texture("bird1.png");
             Status = 0;
-            score++;
+            //score++;
         }
 
         /*if(position.y-40 <= 0){

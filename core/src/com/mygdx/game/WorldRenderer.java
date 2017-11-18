@@ -21,8 +21,10 @@ public class WorldRenderer {
     private Texture wallheadImg;
     private Texture wallbottomImg;
     private Texture circle;
+    private Texture home;
     private Texture gameOver;
     private Texture scoreboard;
+    private Texture candy;
     private List<Texture> num1;
     private List<Texture> num2;
 
@@ -41,8 +43,10 @@ public class WorldRenderer {
         wallheadImg = new Texture("spikewallhead.png");
         wallbottomImg = new Texture("spikewallbottom.png");
         circle = new Texture("circle.png");
+        home = new Texture("start.png");
         gameOver =new Texture("gameover.png");
         scoreboard = new Texture("scoreboard.png");
+        candy = new Texture("candy.png");
         num1 = new ArrayList<Texture>();
         num2 = new ArrayList<Texture>();
         num1 = Arrays.asList(new Texture("0.png"),new Texture("1.png"),new Texture("2.png"),new Texture("3.png"),new Texture("4.png"),new Texture("5.png"),new Texture("6.png"),new Texture("7.png"),new Texture("8.png"),new Texture("9.png"));
@@ -77,11 +81,11 @@ public class WorldRenderer {
     }
     private int calscore(char i){
         if(i == '/'){
-            int x = world.getBirdSprite().getScore()/10;
+            int x = world.score/10;
             return x;
         }
         else if(i == '%'){
-            int x = world.getBirdSprite().getScore()%10;
+            int x = world.score%10;
             return x;
         }
         return 0;
@@ -93,7 +97,7 @@ public class WorldRenderer {
         batch.draw(circle, 50, 200);
         batch.draw(num1.get(calscore('/')), 80, 275);
         batch.draw(num1.get(calscore('%')),200,275);
-
+        batch.draw(candy, world.getCandy().getPosition().x, world.getCandy().getPosition().y);
         batch.draw(spriteImg, world.getBirdSprite().getPosition().x, world.getBirdSprite().getPosition().y);
         batch.draw(wallbottomImg, 0, -30);
         batch.draw(wallheadImg, 0, 670);
@@ -118,6 +122,12 @@ public class WorldRenderer {
 
         if(world.gameStatus == 1){
             renderplay();
+        }
+        else if(world.gameStatus == -1){
+            SpriteBatch batch = myGame.batch;
+            batch.begin();
+            batch.draw(home,50,150);
+            batch.end();
         }
         else if(world.gameStatus == 0)
         {
