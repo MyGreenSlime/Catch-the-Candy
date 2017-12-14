@@ -25,3 +25,4 @@ public class MyGame extends Game {
 		batch.dispose();
 	}
 }
+

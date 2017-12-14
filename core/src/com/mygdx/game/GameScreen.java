@@ -21,7 +21,7 @@ public class GameScreen extends ScreenAdapter {
     private WorldRenderer worldRenderer;
 
 
-    World world;
+    private World world;
     public GameScreen(MyGame myGame){
         this.myGame = myGame;
         world = new World(myGame);
@@ -29,7 +29,6 @@ public class GameScreen extends ScreenAdapter {
         //birdSprite = new BirdSprite(20,350);
 
     }
-
     private void update(float delta){
         world.update(delta);
 

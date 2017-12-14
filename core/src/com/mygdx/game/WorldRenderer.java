@@ -18,12 +18,12 @@ public class WorldRenderer {
     private World world;
 
     private Texture spriteImg;
-    private Texture wallheadImg;
-    private Texture wallbottomImg;
+    private Texture wallHeadImg;
+    private Texture wallBottomImg;
     private Texture circle;
     private Texture home;
     private Texture gameOver;
-    private Texture scoreboard;
+    private Texture scoreBoard;
     private Texture candy;
     private List<Texture> num1;
     private List<Texture> num2;
@@ -40,32 +40,47 @@ public class WorldRenderer {
         batch = myGame.batch;
         this.world = world;
         spriteImg = new Texture("bird1.png");
-        wallheadImg = new Texture("spikewallhead.png");
-        wallbottomImg = new Texture("spikewallbottom.png");
+        wallHeadImg = new Texture("spikewallhead.png");
+        wallBottomImg = new Texture("spikewallbottom.png");
         circle = new Texture("circle.png");
         home = new Texture("start.png");
         gameOver =new Texture("gameover.png");
-        scoreboard = new Texture("scoreboard.png");
+        scoreBoard = new Texture("scoreboard.png");
         candy = new Texture("candy.png");
         num1 = new ArrayList<Texture>();
         num2 = new ArrayList<Texture>();
         num1 = Arrays.asList(new Texture("0.png"),new Texture("1.png"),new Texture("2.png"),new Texture("3.png"),new Texture("4.png"),new Texture("5.png"),new Texture("6.png"),new Texture("7.png"),new Texture("8.png"),new Texture("9.png"));
-        num2 = Arrays.asList(new Texture("0.png"),new Texture("1.png"),new Texture("2.png"),new Texture("3.png"),new Texture("4.png"),new Texture("5.png"),new Texture("6.png"),new Texture("7.png"),new Texture("8.png"),new Texture("9.png"));
+        num2 = Arrays.asList(new Texture(
+                "0.png"),new Texture("1.png"),new Texture("2.png"),new Texture("3.png"),new Texture("4.png"),new Texture("5.png"),new Texture("6.png"),new Texture("7.png"),new Texture("8.png"),new Texture("9.png"));
 
         arrspikeleft = new ArrayList<Texture>();
-        for(int i = 0;i<world.getArrwallleft().size();i++){
+        for(int i = 0;i<world.getArrWallLeft().size();i++){
             spikeleftImg = new Texture("spikeleft.png");
             arrspikeleft.add(spikeleftImg);
         }
 
         arrspikeright = new ArrayList<Texture>();
-        for(int i = 0;i<world.getArrwallright().size();i++){
+        for(int i = 0;i<world.getArrWallRight().size();i++){
             spikerightImg = new Texture("spikeright.png");
             arrspikeright.add(spikerightImg);
         }
 
+
     }
-    private void imgupdate(int status){
+    public Texture getSpriteImg() {
+        return spriteImg;
+    }
+    public Texture getSpikeleftImg(){
+        return  spikeleftImg;
+    }
+    public Texture getSpikerightImg(){
+        return  spikeleftImg;
+    }
+    public Texture getCandyImg(){
+        return candy;
+    }
+
+    private void imgUpdate(int status){
         if(status == 0) {
             spriteImg = new Texture("bird1.png");
         }
@@ -79,7 +94,7 @@ public class WorldRenderer {
             spriteImg = new Texture("bird2flip.png");
         }
     }
-    private int calscore(char i){
+    private int calScore(char i){
         if(i == '/'){
             int x = world.score/10;
             return x;
@@ -90,48 +105,48 @@ public class WorldRenderer {
         }
         return 0;
     }
-    private void renderplay(){
+    private void renderPlay(){
         SpriteBatch batch = myGame.batch;
-        imgupdate(world.getBirdSprite().getStatus());
+        imgUpdate(world.getBirdSprite().getStatus());
         batch.begin();
         batch.draw(circle, 50, 200);
-        batch.draw(num1.get(calscore('/')), 80, 275);
-        batch.draw(num1.get(calscore('%')),200,275);
+        batch.draw(num1.get(calScore('/')), 80, 275);
+        batch.draw(num1.get(calScore('%')),200,275);
         batch.draw(candy, world.getCandy().getPosition().x, world.getCandy().getPosition().y);
         batch.draw(spriteImg, world.getBirdSprite().getPosition().x, world.getBirdSprite().getPosition().y);
-        batch.draw(wallbottomImg, 0, -30);
-        batch.draw(wallheadImg, 0, 670);
+        batch.draw(wallBottomImg, 0, -30);
+        batch.draw(wallHeadImg, 0, 670);
         for(int i =0;i<arrspikeleft.size();i++){
-            batch.draw(arrspikeleft.get(i),world.getArrwallleft().get(i).getPosition().x,world.getArrwallleft().get(i).getPosition().y);
+            batch.draw(arrspikeleft.get(i),world.getArrWallLeft().get(i).getPosition().x,world.getArrWallLeft().get(i).getPosition().y);
         }
         for(int i =0;i<arrspikeright.size();i++){
-            batch.draw(arrspikeright.get(i),world.getArrwallright().get(i).getPosition().x,world.getArrwallright().get(i).getPosition().y);
+            batch.draw(arrspikeright.get(i),world.getArrWallRight().get(i).getPosition().x,world.getArrWallRight().get(i).getPosition().y);
         }
         batch.end();
     }
-    private void rendergameover(){
+    private void renderGameOver(){
         SpriteBatch batch = myGame.batch;
         batch.begin();
         batch.draw(gameOver,50,200);
-        batch.draw(scoreboard, 100, 125);
-        batch.draw(num1.get(calscore('/')), 210, 125,50,60);
-        batch.draw(num1.get(calscore('%')),250,125,50,60);
+        batch.draw(scoreBoard, 100, 125);
+        batch.draw(num1.get(calScore('/')), 210, 125,50,60);
+        batch.draw(num1.get(calScore('%')),250,125,50,60);
         batch.end();
     }
     public void render(float delta){
 
-        if(world.gameStatus == 1){
-            renderplay();
-        }
-        else if(world.gameStatus == -1){
+        if(world.gameStatus == -1){
             SpriteBatch batch = myGame.batch;
             batch.begin();
             batch.draw(home,50,150);
             batch.end();
         }
-        else if(world.gameStatus == 0)
+        else if(world.gameStatus == 0&&world.getBirdSprite().getPosition().y<0)
         {
-            rendergameover();
+            renderGameOver();
+        }
+        else if(world.gameStatus == 1||world.gameStatus == 0){
+            renderPlay();
         }
 
     }

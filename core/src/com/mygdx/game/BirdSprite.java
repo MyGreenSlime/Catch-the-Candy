@@ -14,41 +14,43 @@ import static java.lang.Boolean.TRUE;
  * Created by GreenSlime on 15/11/2560.
  */
 public class BirdSprite {
-    private boolean Check = FALSE;
-    private int Speedy = 0;
-    private static final int Garvity = 3;
-    private float Time = 0;
-    private int Flip = 0;
-    private int Speedx = 3;
-    private int Status =0;
-    private Vector2 position;
+    private boolean check = FALSE;
+    private int speedY = 0;
+    private static final int garvity = 3;
+    private float time = 0;
+    private int flip = 0;
+    private int speedX = 3;
+    private int status =0;
+    public Vector2 position;
+
     public BirdSprite(int x,int y){
         position = new Vector2(x,y);
 
     }
+
     public Vector2 getPosition(){
         return position;
     }
     public int getStatus(){
-        return Status;
+        return status;
     }
     public int getFlip(){
-        return Flip;
+        return flip;
     }
 
     private void checkwall(){
         if (360 - position.x < 0) {
-            Speedx *= -1;
-            Flip = 1;
+            speedX *= -1;
+            flip = 1;
             //spriteImg = new Texture("bird1flip.png");
-            Status = 1;
+            status = 1;
             //score++;
         }
         else if (position.x < 0) {
-            Speedx *= -1;
-            Flip = 0;
+            speedX *= -1;
+            flip = 0;
             //spriteImg = new Texture("bird1.png");
-            Status = 0;
+            status = 0;
             //score++;
         }
 
@@ -59,34 +61,34 @@ public class BirdSprite {
         //System.out.println(score);
     }
     public void move(float delta) {
-        Time += delta;
-        position.x += Speedx;
-        position.y += Speedy;
+        time += delta;
+        position.x += speedX;
+        position.y += speedY;
         checkwall();
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && Check == FALSE) {
-            if (Flip == 0)
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && check == FALSE) {
+            if (flip == 0)
                 //spriteImg = new Texture("bird2.png");
-                Status = 2;
+                status = 2;
             else
                 //spriteImg = new Texture("bird2flip.png");
-                Status = 3;
-            Speedy = 4;
+                status = 3;
+            speedY = 4;
             position.y += 30;
-            Check = TRUE;
-            Time = 0;
+            check = TRUE;
+            time = 0;
         }
-        if (Time > 0.2) {
-            Speedy -= Garvity;
-            if (Check) {
-                if (Flip == 0)
+        if (time > 0.2) {
+            speedY -= garvity;
+            if (check) {
+                if (flip == 0)
                     //spriteImg = new Texture("bird1.png");
-                    Status = 0;
+                    status = 0;
                 else
                     //spriteImg = new Texture("bird1flip.png");
-                    Status = 1;
-                Check = FALSE;
+                    status = 1;
+                check = FALSE;
             }
-            Time = 0;
+            time = 0;
         }
     }
 
