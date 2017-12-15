@@ -73,7 +73,7 @@ public class BirdSprite {
                 //spriteImg = new Texture("bird2flip.png");
                 status = 3;
             speedY = 4;
-            position.y += 30;
+            position.y += 20;
             check = TRUE;
             time = 0;
         }

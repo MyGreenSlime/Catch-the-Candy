@@ -19,7 +19,8 @@ import static java.lang.StrictMath.abs;
 public class GameScreen extends ScreenAdapter {
     private MyGame myGame;
     private WorldRenderer worldRenderer;
-
+    public static final int HEIGHT = 700;
+    public static final int WIDTH= 400;
 
     private World world;
     public GameScreen(MyGame myGame){

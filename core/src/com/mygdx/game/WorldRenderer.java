@@ -76,9 +76,6 @@ public class WorldRenderer {
     public Texture getSpikerightImg(){
         return  spikeleftImg;
     }
-    public Texture getCandyImg(){
-        return candy;
-    }
 
     private void imgUpdate(int status){
         if(status == 0) {
@@ -131,6 +128,7 @@ public class WorldRenderer {
         batch.draw(scoreBoard, 100, 125);
         batch.draw(num1.get(calScore('/')), 210, 125,50,60);
         batch.draw(num1.get(calScore('%')),250,125,50,60);
+
         batch.end();
     }
     public void render(float delta){

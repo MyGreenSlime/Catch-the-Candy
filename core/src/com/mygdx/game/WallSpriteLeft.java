@@ -18,14 +18,14 @@ public class WallSpriteLeft {
         //position.x = -30;
         move = 1;
         //System.out.println("in"+position.x);
-        if(position.x == -30){
+        if(position.x == 0){
             move = 0;
         }
         position.x+=move;
 
     }
     public void outScreen(){
-        position.x = -60;
+        position.x = -35;
         /*move = 1;
         if(position.x == -60){
             move = 0;
