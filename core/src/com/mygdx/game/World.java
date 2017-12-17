@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -22,7 +23,6 @@ import static java.lang.Math.abs;
  */
 public class World {
     private MyGame myGame;
-    private WorldRenderer worldRenderer;
     private BirdSprite birdSprite;
     private Candy candy;
 
@@ -40,6 +40,9 @@ public class World {
     public int score;
     public int gameStatus;
 
+    private Texture wallImg;
+    private Texture birdImg;
+
     public World(MyGame myGame) {
         this.myGame = myGame;
         birdSprite = new BirdSprite(200, 350);
@@ -54,7 +57,8 @@ public class World {
         rand = new Random();
         showWallAt = new ArrayList<Integer>();
 
-
+        wallImg = new Texture("spikeleft.png");
+        birdImg = new Texture("bird1.png");
         for (int i = 0; i < 8; i++) {
             tmpWallLeft = new WallSpriteLeft(-30, 40 + 80 * i);
             tmpWallRight = new WallSpriteRight(400, 40 + 80 * i);
@@ -62,9 +66,7 @@ public class World {
             arrWallLeft.add(tmpWallLeft);
         }
         tempFlip = birdSprite.getFlip();
-        worldRenderer = new WorldRenderer(myGame, this);
-        birdRec = new Rectangle((int) getBirdSprite().getPosition().x, (int) getBirdSprite().getPosition().y, worldRenderer.getSpriteImg().getWidth(), worldRenderer.getSpriteImg().getHeight());
-        spikeRec = new Rectangle((int) arrWallLeft.get(0).getPosition().x, (int) arrWallLeft.get(0).getPosition().y, worldRenderer.getSpikeleftImg().getWidth(), worldRenderer.getSpikeleftImg().getHeight());
+
 
     }
 
@@ -89,9 +91,7 @@ public class World {
             arrWallLeft.add(tmpWallLeft);
         }
         tempFlip = birdSprite.getFlip();
-        worldRenderer = new WorldRenderer(myGame, this);
-        birdRec = new Rectangle((int) getBirdSprite().getPosition().x, (int) getBirdSprite().getPosition().y, worldRenderer.getSpriteImg().getWidth(), worldRenderer.getSpriteImg().getHeight());
-        spikeRec = new Rectangle((int) arrWallLeft.get(0).getPosition().x, (int) arrWallLeft.get(0).getPosition().y, worldRenderer.getSpikeleftImg().getWidth(), worldRenderer.getSpikeleftImg().getHeight());
+
     }
 
     public BirdSprite getBirdSprite() {
@@ -141,7 +141,7 @@ public class World {
     }
 
     private void checkHit() {
-        birdRec = new Rectangle((int) getBirdSprite().getPosition().x, (int) getBirdSprite().getPosition().y, worldRenderer.getSpriteImg().getWidth() + 5, worldRenderer.getSpriteImg().getHeight() + 5);
+        birdRec = new Rectangle((int) birdSprite.getPosition().x, (int) birdSprite.getPosition().y, birdImg.getWidth() + 5, birdImg.getHeight() + 5);
         //birdRec.setCenter(birdRec.x+(birdRec.width/2),birdRec.y+(birdRec.height/2));
         if (score % 2 == 1) {
             birdRec.setX(birdRec.x + 4);
@@ -150,7 +150,7 @@ public class World {
                     gameStatus = 0;
                     //System.out.println("hit left" + i);
                 }*/
-                spikeRec = new Rectangle((int) arrWallLeft.get(i).getPosition().x, (int) arrWallLeft.get(i).getPosition().y, worldRenderer.getSpikeleftImg().getWidth(), worldRenderer.getSpikeleftImg().getHeight() + 5);
+                spikeRec = new Rectangle((int) arrWallLeft.get(i).getPosition().x, (int) arrWallLeft.get(i).getPosition().y, wallImg.getWidth(), wallImg.getHeight() + 5);
                 if (birdRec.overlaps(spikeRec)) {
                     gameStatus = 0;
                 }
@@ -163,7 +163,7 @@ public class World {
                     gameStatus = 0;
                     //System.out.println("hit right" + i);
                 }*/
-                spikeRec = new Rectangle((int) arrWallRight.get(i).getPosition().x, (int) arrWallRight.get(i).getPosition().y, worldRenderer.getSpikerightImg().getWidth() + 5, worldRenderer.getSpikerightImg().getHeight() + 5);
+                spikeRec = new Rectangle((int) arrWallRight.get(i).getPosition().x, (int) arrWallRight.get(i).getPosition().y, wallImg.getWidth() + 5, wallImg.getHeight() + 5);
                 if (birdRec.overlaps(spikeRec)) {
                     gameStatus = 0;
                 }
