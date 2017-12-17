@@ -20,20 +20,22 @@ public class GameScreen extends ScreenAdapter {
     private MyGame myGame;
     private WorldRenderer worldRenderer;
     public static final int HEIGHT = 700;
-    public static final int WIDTH= 400;
+    public static final int WIDTH = 400;
 
     private World world;
-    public GameScreen(MyGame myGame){
-        this.myGame = myGame;
+
+    public GameScreen(MyGame myGame) {
+        myGame = myGame;
         world = new World(myGame);
-        worldRenderer =new WorldRenderer(myGame,world);
-        //birdSprite = new BirdSprite(20,350);
+        worldRenderer = new WorldRenderer(myGame, world);
 
     }
-    private void update(float delta){
+
+    private void update(float delta) {
         world.update(delta);
 
     }
+
     public void render(float delta) {
         Gdx.gl.glClearColor(.50f, .230f, .50f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
