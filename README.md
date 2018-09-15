@@ -1,4 +1,4 @@
 # Catch-the-Candy
 game in oop subject
 <br>
-<img src = "https://drive.google.com/open?id=1HHOSgkMFgObVNLSlL2e3VKumbQ-3a2s_">
+![alt text](https://drive.google.com/drive/u/0/folders/1QD2mt-WJ9AxSzcYE_JiegttJLCFiEP2l)
